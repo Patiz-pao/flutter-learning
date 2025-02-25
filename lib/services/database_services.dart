@@ -26,4 +26,19 @@ class DatabaseServices {
 
     return Task.fromMap(responseMap);
   }
+
+  static Future<List<Task>> getTasks() async {
+    var url = Uri.parse('$baseUrl/getTask');
+    http.Response response = await http.get(url, headers: headers);
+
+    developer.log(response.body);
+    Map responseMap = jsonDecode(response.body);
+    
+    if (responseMap['status'] == 'OK') {
+      List data = responseMap['data'];
+      return data.map((taskMap) => Task.fromMap(taskMap)).toList();
+    } else {
+      throw Exception('Failed to load tasks: ${responseMap['message']}');
+    }
+  }
 }

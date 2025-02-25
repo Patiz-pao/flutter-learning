@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Portfolio",
+            "List",
             style: GoogleFonts.kanit(color: Colors.white, fontSize: 24),
           ),
           backgroundColor: const Color.fromARGB(255, 0, 57, 143),
