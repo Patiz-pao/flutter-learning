@@ -12,17 +12,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Patipat",
+      theme: ThemeData(
+        primaryColor: const Color.fromARGB(255, 0, 155, 65),
+        scaffoldBackgroundColor: Colors.grey[100],
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            "List",
-            style: GoogleFonts.kanit(color: Colors.white, fontSize: 24),
+        "Book Store",
+        style: GoogleFonts.kanit(color: Colors.white, fontSize: 24),
           ),
-          backgroundColor: const Color.fromARGB(255, 0, 57, 143),
+          backgroundColor: const Color.fromARGB(255, 0, 155, 65),
           centerTitle: true,
+          actions: [
+        IconButton(
+          icon: const Icon(Icons.shopping_cart),
+          onPressed: () {},
         ),
-        body: const Home(),
+          ],
+        ),
+        body: const Center(
+          child: Home(),
+        ),
       ),
     );
   }
