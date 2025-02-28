@@ -1,4 +1,4 @@
-const String baseUrl = 'http://localhost:8080'; // หรือ API ที่ต้องการ
+const String baseUrl = 'http://10.0.2.2:8080';
 const Map<String, String> headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',

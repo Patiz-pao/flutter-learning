@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learning/pages/home.dart';
+import 'package:flutter_learning/pages/todolist.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -13,30 +13,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Patipat",
+      title: "Todo List App",
       theme: ThemeData(
-        primaryColor: const Color.fromARGB(255, 0, 155, 65),
-        scaffoldBackgroundColor: Colors.grey[100],
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-        "Book Store",
-        style: GoogleFonts.kanit(color: Colors.white, fontSize: 24),
-          ),
-          backgroundColor: const Color.fromARGB(255, 0, 155, 65),
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.green,
+          brightness: Brightness.light,
+        ),
+        textTheme: GoogleFonts.kanitTextTheme(Theme.of(context).textTheme),
+        appBarTheme: AppBarTheme(
+          elevation: 0,
           centerTitle: true,
-          actions: [
-        IconButton(
-          icon: const Icon(Icons.shopping_cart),
-          onPressed: () {},
+          titleTextStyle: GoogleFonts.kanit(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-          ],
-        ),
-        body: const Center(
-          child: Home(),
+        listTileTheme: const ListTileThemeData(
+          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         ),
       ),
+      home: const TodoList(),
     );
   }
 }
