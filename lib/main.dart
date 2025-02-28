@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_learning/pages/home.dart';
 import 'package:flutter_learning/pages/todolist.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
+          seedColor: Colors.blue,
           brightness: Brightness.light,
         ),
         textTheme: GoogleFonts.kanitTextTheme(Theme.of(context).textTheme),
@@ -33,7 +34,60 @@ class MyApp extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         ),
       ),
-      home: const TodoList(),
+      home: const MainScreen(),
+    );
+  }
+}
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int currentPageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: <Widget>[
+        const HomePage(),
+        const TodoList(),
+      ][currentPageIndex],
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+            selectedIcon: Badge(
+              isLabelVisible: false,
+              child: Icon(Icons.home),
+            ),
+            icon: Badge(
+              isLabelVisible: false,
+              child: Icon(Icons.home_outlined),
+            ),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            selectedIcon: Badge(
+              isLabelVisible: false,
+              child: Icon(Icons.list),
+            ),
+            icon: Badge(
+              isLabelVisible: false,
+              child: Icon(Icons.list),
+            ),
+            label: 'Todo List',
+          ),
+        ],
+      ),
     );
   }
 }
