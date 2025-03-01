@@ -22,12 +22,11 @@ class HomePage extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 4.0),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(),
                           blurRadius: 10,
-                          offset: const Offset(0, 5),
+                          offset: const Offset(0, 1),
                         ),
                       ],
                     ),
@@ -41,8 +40,8 @@ class HomePage extends StatelessWidget {
 
                   // ชื่อ
                   const Text(
-                    'Patipat',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    'Patipat Mangkara',
+                    style: TextStyle(fontSize: 28),
                   ),
 
                   const SizedBox(height: 8),
@@ -59,17 +58,13 @@ class HomePage extends StatelessWidget {
                     ),
                     child: const Text(
                       'นักศึกษาปริญญาตรี',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: TextStyle(color: Colors.blue),
                     ),
                   ),
                 ],
               ),
             ),
 
-            // ปุ่มแสดงผล
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: Row(
@@ -88,12 +83,8 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: () {
-                        // TODO: Implement file download functionality
-                        // You'll need to:
-                        // 1. Add url_launcher package to pubspec.yaml
-                        // 2. Import 'package:url_launcher/url_launcher.dart'
-                        // 3. Add the actual file URL and launch it
+                      onPressed: () async {
+                        
                       },
                     ),
                   ),
@@ -126,25 +117,25 @@ class HomePage extends StatelessWidget {
                     'Email',
                     'm.patipat.pao@gmail.com',
                     Icons.email,
-                    Colors.red,
+                    Theme.of(context).colorScheme.primary,
                   ),
                   _buildInfoCard(
                     'เบอร์โทร',
                     '(+66) 86-345-1537',
                     Icons.phone,
-                    Colors.green,
+                    Theme.of(context).colorScheme.primary,
                   ),
                   _buildInfoCard(
                     'ที่อยู่',
                     'Bangkok, Thailand',
                     Icons.location_on,
-                    Colors.blue,
+                    Theme.of(context).colorScheme.primary,
                   ),
                   _buildInfoCard(
                     'อาชีพ',
                     'นักศึกษาปริญญาตรี',
                     Icons.work,
-                    Colors.orange,
+                    Theme.of(context).colorScheme.primary,
                   ),
                 ],
               ),
@@ -158,23 +149,62 @@ class HomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 8, bottom: 16),
-                    child: Text(
-                      'ทักษะและความสามารถ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  // Programming Languages
+                  const SizedBox(height: 12),
+                  Text(
+                    'Programming Languages',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  _buildSkillBar('Flutter', 0.85, Colors.blue),
                   const SizedBox(height: 12),
-                  _buildSkillBar('Dart', 0.80, Colors.teal),
+                  _buildSkillBadges('Java', 0.85, Colors.green),
                   const SizedBox(height: 12),
-                  _buildSkillBar('Firebase', 0.75, Colors.amber),
+                  _buildSkillBadges('Python', 0.80, Colors.green),
                   const SizedBox(height: 12),
-                  _buildSkillBar('UI/UX Design', 0.70, Colors.purple),
+                  _buildSkillBadges('TypeScript', 0.75, Colors.green),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('JavaScript', 0.75, Colors.green),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('Kotlin', 0.70, Colors.purple),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('C/C++', 0.65, Colors.blue),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('C#', 0.60, Colors.blue),
+
+                  const SizedBox(height: 12),
+                  // Frontend
+                  Text(
+                    'Frontend',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('React', 0.80, Colors.green),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('Next.js', 0.75, Colors.green),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('Tailwind CSS', 0.85, Colors.green),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('HTML/CSS', 0.90, Colors.orange),
+
+                  const SizedBox(height: 12),
+                  // Backend & Database
+                  Text(
+                    'Backend & Database',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('Spring Boot', 0.75, Colors.green),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('MySQL', 0.80, Colors.green),
+                  const SizedBox(height: 12),
+
+                  const SizedBox(height: 12),
+                  // Version Control
+                  Text(
+                    'Version Control',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 12),
+                  _buildSkillBadges('Git/GitHub', 0.85, Colors.green),
                 ],
               ),
             ),
@@ -216,46 +246,58 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // แสดงแถบทักษะ
-  Widget _buildSkillBar(String skill, double level, Color color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(skill, style: const TextStyle(fontWeight: FontWeight.w500)),
-            Text(
-              '${(level * 100).toInt()}%',
-              style: TextStyle(fontWeight: FontWeight.w500, color: color),
+  Widget _buildSkillBadges(String skill, double level, Color color) {
+    String levelText;
+
+    if (level >= 0.9) {
+      levelText = "Expert";
+    } else if (level >= 0.75) {
+      levelText = "Advanced";
+    } else if (level >= 0.6) {
+      levelText = "Intermediate";
+    } else {
+      levelText = "Beginner";
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              skill,
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
             ),
-          ],
-        ),
-        const SizedBox(height: 6),
-        Stack(
-          children: [
-            Container(
-              height: 10,
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(5),
+                color: color.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: color.withOpacity(0.3)),
               ),
-            ),
-            FractionallySizedBox(
-              widthFactor: level,
-              child: Container(
-                height: 10,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [color.withOpacity(0.7), color],
-                  ),
-                  borderRadius: BorderRadius.circular(5),
+              child: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.verified, color: color, size: 16),
+                    const SizedBox(width: 4),
+                    Text(
+                      levelText,
+                      style: TextStyle(
+                        color: color,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
