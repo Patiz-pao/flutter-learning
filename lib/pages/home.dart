@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  Future<void> launchURL() async {
+    final Uri url = Uri.parse('https://www.dropbox.com/scl/fi/25md071rsjdi9e9yly5wm/Resume-Patipat.pdf?rlkey=zgkf4tqkob72ocl8fa1n5vy9e&st=4exw256n&dl=0');
+
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +81,8 @@ class HomePage extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: OutlinedButton.icon(
-                      icon: const Icon(Icons.download_rounded),
-                      label: const Text('Download Resume'),
+                      icon: const Icon(Icons.remove_red_eye),
+                      label: const Text('View Resume'),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         side: BorderSide(
@@ -83,9 +92,7 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: () async {
-                        
-                      },
+                      onPressed: launchURL,
                     ),
                   ),
                 ],

@@ -36,16 +36,8 @@ class _TodoListState extends State<TodoList> {
         elevation: 0,
         title: Text(
           'My Todo List',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w600,
-          ),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.white),
-            onPressed: () => getTasks(),
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -97,7 +89,7 @@ class _TodoListState extends State<TodoList> {
               ],
             ),
           ),
-          
+
           // Tasks list title
           Padding(
             padding: const EdgeInsets.only(
@@ -118,39 +110,35 @@ class _TodoListState extends State<TodoList> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(
-                    Icons.sort,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  icon: const Icon(Icons.refresh, color: Colors.black87),
                   onPressed: () {
-                    // จัดเรียงรายการงาน (สามารถเพิ่มฟังก์ชันได้ในอนาคต)
+                    getTasks();
                   },
                 ),
               ],
             ),
           ),
-          
+
           // Tasks list
           Expanded(
-            child: isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : tasks!.isEmpty
+            child:
+                isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : tasks!.isEmpty
                     ? _buildEmptyState()
                     : ListView.builder(
-                        padding: const EdgeInsets.only(
-                          top: 8,
-                          bottom: 80,
-                          left: 16,
-                          right: 16,
-                        ),
-                        itemCount: tasks?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          final task = tasks![index];
-                          return _buildTaskCard(context, task, index);
-                        },
+                      padding: const EdgeInsets.only(
+                        top: 8,
+                        bottom: 80,
+                        left: 16,
+                        right: 16,
                       ),
+                      itemCount: tasks?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        final task = tasks![index];
+                        return _buildTaskCard(context, task, index);
+                      },
+                    ),
           ),
         ],
       ),
@@ -190,11 +178,7 @@ class _TodoListState extends State<TodoList> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            icon,
-            color: Colors.white,
-            size: 24,
-          ),
+          Icon(icon, color: Colors.white, size: 24),
           const SizedBox(height: 12),
           Text(
             value,
@@ -228,11 +212,7 @@ class _TodoListState extends State<TodoList> {
         ),
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
-        child: const Icon(
-          Icons.delete,
-          color: Colors.white,
-          size: 30,
-        ),
+        child: const Icon(Icons.delete, color: Colors.white, size: 30),
       ),
       direction: DismissDirection.endToStart,
       confirmDismiss: (direction) async {
@@ -243,9 +223,7 @@ class _TodoListState extends State<TodoList> {
       },
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         elevation: 2,
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(
@@ -264,19 +242,16 @@ class _TodoListState extends State<TodoList> {
               '${index + 1}',
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
-                color: Theme.of(context).colorScheme.primary,
+                color: Colors.white,
                 fontSize: 16,
               ),
             ),
           ),
           title: Text(
             task.task,
-            style: GoogleFonts.kanit(
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-            ),
+            style: GoogleFonts.kanit(fontWeight: FontWeight.w500, fontSize: 16),
           ),
-          
+
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -293,11 +268,7 @@ class _TodoListState extends State<TodoList> {
               ),
               // ปุ่มลบ
               IconButton(
-                icon: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                  size: 20,
-                ),
+                icon: const Icon(Icons.delete, color: Colors.red, size: 20),
                 onPressed: () async {
                   final confirm = await _showDeleteConfirmDialog(context, task);
                   if (confirm == true) {
@@ -317,11 +288,7 @@ class _TodoListState extends State<TodoList> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.check_circle_outline,
-            size: 80,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.check_circle_outline, size: 80, color: Colors.grey[400]),
           const SizedBox(height: 20),
           Text(
             'ไม่มีงานที่ต้องทำ',
@@ -334,9 +301,7 @@ class _TodoListState extends State<TodoList> {
           const SizedBox(height: 10),
           Text(
             'กดปุ่ม "เพิ่มงานใหม่" เพื่อเริ่มสร้างรายการงาน',
-            style: GoogleFonts.kanit(
-              color: Colors.grey[500],
-            ),
+            style: GoogleFonts.kanit(color: Colors.grey[500]),
             textAlign: TextAlign.center,
           ),
         ],
@@ -347,87 +312,78 @@ class _TodoListState extends State<TodoList> {
   Future<bool?> _showDeleteConfirmDialog(BuildContext context, Task task) {
     return showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        title: Text(
-          'ลบงาน',
-          style: GoogleFonts.kanit(
-            fontWeight: FontWeight.w600,
+      builder:
+          (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            title: Text(
+              'ลบงาน',
+              style: GoogleFonts.kanit(fontWeight: FontWeight.w600),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.delete_forever, color: Colors.red, size: 56),
+                const SizedBox(height: 16),
+                Text(
+                  'คุณต้องการลบงาน "${task.task}" หรือไม่?',
+                  style: GoogleFonts.kanit(),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text('ยกเลิก', style: GoogleFonts.kanit()),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () async {
+                  setState(() => isLoading = true);
+                  try {
+                    bool success = await DatabaseServices.deleteTask(task.id);
+                    if (context.mounted) {
+                      Navigator.pop(context, true);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            success
+                                ? 'ลบรายการเรียบร้อย'
+                                : 'ไม่สามารถลบรายการได้',
+                            style: GoogleFonts.kanit(),
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          margin: const EdgeInsets.all(16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      );
+                    }
+                    await getTasks();
+                  } catch (e) {
+                    setState(() => isLoading = false);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'เกิดข้อผิดพลาด: ${e.toString()}',
+                            style: GoogleFonts.kanit(),
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: Text('ลบ', style: GoogleFonts.kanit()),
+              ),
+            ],
           ),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.delete_forever,
-              color: Colors.red,
-              size: 56,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'คุณต้องการลบงาน "${task.task}" หรือไม่?',
-              style: GoogleFonts.kanit(),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(
-              'ยกเลิก',
-              style: GoogleFonts.kanit(),
-            ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () async {
-              setState(() => isLoading = true);
-              try {
-                bool success = await DatabaseServices.deleteTask(task.id);
-                if (context.mounted) {
-                  Navigator.pop(context, true);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        success ? 'ลบรายการเรียบร้อย' : 'ไม่สามารถลบรายการได้',
-                        style: GoogleFonts.kanit(),
-                      ),
-                      behavior: SnackBarBehavior.floating,
-                      margin: const EdgeInsets.all(16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  );
-                }
-                await getTasks();
-              } catch (e) {
-                setState(() => isLoading = false);
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'เกิดข้อผิดพลาด: ${e.toString()}',
-                        style: GoogleFonts.kanit(),
-                      ),
-                    ),
-                  );
-                }
-              }
-            },
-            child: Text(
-              'ลบ',
-              style: GoogleFonts.kanit(),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -442,9 +398,7 @@ class _TodoListState extends State<TodoList> {
           ),
           title: Text(
             'เพิ่มงานใหม่',
-            style: GoogleFonts.kanit(
-              fontWeight: FontWeight.w600,
-            ),
+            style: GoogleFonts.kanit(fontWeight: FontWeight.w600),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -469,10 +423,7 @@ class _TodoListState extends State<TodoList> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(
-                'ยกเลิก',
-                style: GoogleFonts.kanit(),
-              ),
+              child: Text('ยกเลิก', style: GoogleFonts.kanit()),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -517,10 +468,7 @@ class _TodoListState extends State<TodoList> {
                   }
                 }
               },
-              child: Text(
-                'เพิ่ม',
-                style: GoogleFonts.kanit(),
-              ),
+              child: Text('เพิ่ม', style: GoogleFonts.kanit()),
             ),
           ],
         );
@@ -539,9 +487,7 @@ class _TodoListState extends State<TodoList> {
           ),
           title: Text(
             'แก้ไขงาน',
-            style: GoogleFonts.kanit(
-              fontWeight: FontWeight.w600,
-            ),
+            style: GoogleFonts.kanit(fontWeight: FontWeight.w600),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -564,10 +510,7 @@ class _TodoListState extends State<TodoList> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(
-                'ยกเลิก',
-                style: GoogleFonts.kanit(),
-              ),
+              child: Text('ยกเลิก', style: GoogleFonts.kanit()),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -614,10 +557,7 @@ class _TodoListState extends State<TodoList> {
                   }
                 }
               },
-              child: Text(
-                'บันทึก',
-                style: GoogleFonts.kanit(),
-              ),
+              child: Text('บันทึก', style: GoogleFonts.kanit()),
             ),
           ],
         );
