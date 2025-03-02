@@ -5,18 +5,24 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> imagePaths = [
+      "assets/images/Patipat_1.JPG",
+      "assets/images/Patipat_2.JPG"
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Profile'),
         backgroundColor: Theme.of(context).colorScheme.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          color: Colors.white, // เปลี่ยนสีของปุ่ม back arrow ที่นี่
+          color: Colors.white,
           onPressed: () {
-            Navigator.pop(context); // กลับไปหน้าก่อนหน้า
+            Navigator.pop(context);
           },
         ),
       ),
+      
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -27,7 +33,7 @@ class Profile extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(),
+                    color: Colors.black.withOpacity(0.2),
                     blurRadius: 10,
                     offset: const Offset(0, 1),
                   ),
@@ -59,6 +65,34 @@ class Profile extends StatelessWidget {
                 _buildStatColumn('Followers', '973'),
                 _buildStatColumn('Following', '516'),
               ],
+            ),
+            const SizedBox(height: 20),
+
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(8),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 4,
+                mainAxisSpacing: 4,
+              ),
+              itemCount: imagePaths.length,
+              itemBuilder: (context, index) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: Image.asset(
+                    imagePaths[index],
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        "assets/images/Patipat.JPG",
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
