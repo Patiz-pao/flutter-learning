@@ -5,7 +5,9 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   Future<void> launchURL() async {
-    final Uri url = Uri.parse('https://www.dropbox.com/scl/fi/25md071rsjdi9e9yly5wm/Resume-Patipat.pdf?rlkey=zgkf4tqkob72ocl8fa1n5vy9e&st=4exw256n&dl=0');
+    final Uri url = Uri.parse(
+      'https://www.dropbox.com/scl/fi/25md071rsjdi9e9yly5wm/Resume-Patipat.pdf?rlkey=zgkf4tqkob72ocl8fa1n5vy9e&st=4exw256n&dl=0',
+    );
 
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
@@ -17,6 +19,15 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.manage_accounts_outlined),
+            onPressed: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+            color: Colors.white,
+          ),
+        ],
         title: const Text('My Profile'),
         elevation: 0,
       ),

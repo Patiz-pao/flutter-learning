@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/pages/home.dart';
+import 'package:flutter_learning/pages/profile.dart';
 import 'package:flutter_learning/pages/todolist.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,6 +17,9 @@ class MyApp extends StatelessWidget {
       locale: const Locale('th', 'TH'),
       debugShowCheckedModeBanner: false,
       title: "Todo List App",
+      routes: {
+        '/profile': (context) => const Profile(), // กำหนดเส้นทางไปหน้า Profile
+      },
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.light(
