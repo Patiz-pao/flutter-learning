@@ -5,20 +5,46 @@ import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
 
 class DatabaseServices {
+  static Future<List<Task>> getTasks() async {
+    try {
+      var url = Uri.parse('$baseUrl/getTask');
+      http.Response response = await http.get(url, headers: headers);
+
+      developer.log(
+        'Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}',
+      );
+
+      Map<String, dynamic> responseMap = jsonDecode(
+        utf8.decode(response.bodyBytes),
+      );
+      List<dynamic> responseList = responseMap['data'] ?? [];
+
+      List<Task> tasks = [];
+      for (Map taskMap in responseList) {
+        Task task = Task.fromMap(taskMap);
+        tasks.add(task);
+      }
+
+      return tasks;
+    } catch (e) {
+      developer.log('Error parsing tasks: $e');
+      rethrow;
+    }
+  }
 
   static Future<Task> addTasks(String taskText) async {
     try {
       var url = Uri.parse('$baseUrl/addTask');
       developer.log('Sending task: $taskText');
-      
+
       http.Response response = await http.post(
-        url, 
-        headers: headers, 
-        body: jsonEncode({'task': taskText})
+        url,
+        headers: headers,
+        body: jsonEncode({'task': taskText}),
       );
-      
+
       developer.log('Response body: ${response.body}');
-      
+
       Map<String, dynamic> responseMap = jsonDecode(response.body);
       Task task = Task.fromMap(responseMap['data']);
 
@@ -31,19 +57,16 @@ class DatabaseServices {
 
   static Future<bool> deleteTask(String taskId) async {
     try {
-      var url = Uri.parse('$baseUrl/deleteTask').replace(
-        queryParameters: {'id': taskId}
-      );
+      var url = Uri.parse(
+        '$baseUrl/deleteTask',
+      ).replace(queryParameters: {'id': taskId});
       developer.log('Deleting task with URL: $url');
-      
-      http.Response response = await http.delete(
-        url,
-        headers: headers,
-      );
-      
+
+      http.Response response = await http.delete(url, headers: headers);
+
       developer.log('Response status: ${response.statusCode}');
       developer.log('Response body: ${response.body}');
-      
+
       if (response.statusCode == 200) {
         Map<String, dynamic> responseMap = jsonDecode(response.body);
         return responseMap['status'] == 'OK';
@@ -56,25 +79,30 @@ class DatabaseServices {
     }
   }
 
-  static Future<List<Task>> getTasks() async {
+  static Future<bool> updateTask(Task task) async {
     try {
-      var url = Uri.parse('$baseUrl/getTask');
-      http.Response response = await http.get(url, headers: headers);
-      
-      developer.log('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
-      
-      Map<String, dynamic> responseMap = jsonDecode(utf8.decode(response.bodyBytes));
-      List<dynamic> responseList = responseMap['data'] ?? [];
-      
-      List<Task> tasks = [];
-      for (Map taskMap in responseList) {
-        Task task = Task.fromMap(taskMap);
-        tasks.add(task);
-      }
+      var url = Uri.parse(
+        '$baseUrl/updateTask',
+      ).replace(queryParameters: {'id': task.id});
+      developer.log('Update task with URL: $url');
 
-      return tasks;
+      http.Response response = await http.put(
+        url,
+        headers: headers,
+        body: jsonEncode({'id': task.id, 'task': task.task}),
+      );
+
+      developer.log('Response status: ${response.statusCode}');
+      developer.log('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseMap = jsonDecode(response.body);
+        return responseMap['status'] == 'OK';
+      } else {
+        throw Exception('Failed to delete task: ${response.body}');
+      }
     } catch (e) {
-      developer.log('Error parsing tasks: $e');
+      developer.log('Error deleting task: $e');
       rethrow;
     }
   }

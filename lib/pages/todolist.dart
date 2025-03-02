@@ -504,6 +504,10 @@ class _TodoListState extends State<TodoList> {
                 ),
                 autofocus: true,
                 style: GoogleFonts.kanit(),
+                keyboardType:
+                    TextInputType.text, // ใช้คีย์บอร์ดที่รองรับการพิมพ์
+                enableIMEPersonalizedLearning:
+                    true, // เปิดการเรียนรู้ของคีย์บอร์ด
               ),
             ],
           ),
@@ -522,9 +526,8 @@ class _TodoListState extends State<TodoList> {
                 if (taskController.text.isNotEmpty) {
                   setState(() => isLoading = true);
                   try {
-                    // ปรับให้ตรงกับการเรียกใช้งานจริง
-                    // await DatabaseServices.updateTask(task.id, taskController.text);
-                    // แทนที่ด้วยการโหลดข้อมูลใหม่
+                    Task taskReq = Task(id: task.id, task: taskController.text);
+                    await DatabaseServices.updateTask(taskReq);
                     await getTasks();
                     if (context.mounted) {
                       Navigator.pop(context);
